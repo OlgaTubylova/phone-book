@@ -68,6 +68,24 @@ def copy_data(file_name, second_file):
         print('Введен неверный номер строки')
 
 
+def edit_data(file_name):
+    copy = int(input('Введите номер строки для редактирования: '))
+    res = read_file(file_name)
+    edit = res[copy-1]
+
+    print("Выберите что изменить: \n 1 - Имя \n 2 - Фамилия \n 3 - Номер телефона")
+    command = int(input("Введите число: "))
+
+    if command == 1:
+        edit['first_name'] = input('Введите новое имя: ')
+    elif command == 2:
+        edit['second_name'] = input('Введите новую фамилию: ')
+    elif command == 3:
+        edit['phone_number'] = input('Введите новый номер телефона: ')
+
+    standard_write(file_name, res)
+
+
 def standard_write(file_name, res):
     with open(file_name, 'w', encoding='utf-8', newline='') as data:
         f_w = DictWriter(data, fieldnames=['first_name', 'second_name', 'phone_number'])
@@ -102,5 +120,10 @@ def main():
                 print('Файл отсутсвует, пожалуйста создайте файл')
                 continue
             copy_data(file_name, second_file)
+        elif command == 'e':
+            if not exists(file_name):
+                print('Файл отсутсвует, пожалуйста создайте файл')
+                continue
+            edit_data(file_name)
 
 main()
