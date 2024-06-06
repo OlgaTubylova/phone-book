@@ -36,7 +36,7 @@ def write_file(file_name):
     res = read_file(file_name)
     new_obj = {'first_name': user_data[0], 'second_name': user_data[1], 'phone_number': user_data[2]}
     res.append(new_obj)
-    standart_write(file_name, res)
+    standard_write(file_name, res)
 
 
 def read_file(file_name):
@@ -50,32 +50,29 @@ def remove_row(file_name):
     res = read_file(file_name)
     if search <= len(res):
         res.pop(search - 1)
-        standart_write(file_name, res)
+        standard_write(file_name, res)
     else:
         print('Введен неверный номер строки')
 
-def standart_write(file_name, res):
+
+def copy_data(file_name, second_file):
+    copy = int(input('Введите номер строки для копирования: '))
+    res = read_file(file_name)
+    res2 = read_file(second_file)
+
+    if copy <= len(res):
+        res2.append(res[copy-1])
+        standard_write(second_file, res2)
+        print('Контакт скопирован')
+    else:
+        print('Введен неверный номер строки')
+
+
+def standard_write(file_name, res):
     with open(file_name, 'w', encoding='utf-8', newline='') as data:
         f_w = DictWriter(data, fieldnames=['first_name', 'second_name', 'phone_number'])
         f_w.writeheader()
         f_w.writerows(res)
-
-def copy_data(file_name, second_file):
-
-    search = int(input('Введите номер строки для копирования: '))
-    copy = []
-    line = read_file(file_name)
-    if search <= len(line):
-        copy = line.pop(search - 1)
-        standart_write(file_name, line)
-    else:
-        print('Введен неверный номер строки')
-
-    res = read_file(second_file)
-
-    new_obj = {'first_name': copy['first_name'], 'second_name': copy['second_name'], 'phone_number': copy['phone_number']}
-    res.append(new_obj)
-    standart_write(second_file, res)
 
 
 file_name = 'phone.csv'
